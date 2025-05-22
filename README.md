@@ -13,6 +13,8 @@ Webhook support for logging claims
 How to use:
 Add this resource to your server, configure the rewards and webhook in config.lua,
 and enjoy a referral system that encourages community growth!
+<a href="https://discord.gg/AjhhfKbDFH">Discord</a>
+
 # Preview
 <img src="https://raw.githubusercontent.com/Kurotodev/ks_references/refs/heads/main/Preview.png">
 
