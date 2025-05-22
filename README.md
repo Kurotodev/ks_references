@@ -4,7 +4,7 @@ Reference System for FiveM
 A simple and modern referral system for FiveM servers.
 Players can generate and share their referral codes to invite others and receive rewards.
 <br>
-Features include:
+**Features include:**
 <br>
 Clean and responsive UI
 Easy code sharing and copy button
