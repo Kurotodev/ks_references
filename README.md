@@ -14,7 +14,7 @@ How to use:
 Add this resource to your server, configure the rewards and webhook in config.lua,
 and enjoy a referral system that encourages community growth!
 # Preview
-https://raw.githubusercontent.com/Kurotodev/ks_references/refs/heads/main/Preview.png
+<img src="https://raw.githubusercontent.com/Kurotodev/ks_references/refs/heads/main/Preview.png">
 
 
 ```
