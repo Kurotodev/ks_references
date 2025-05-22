@@ -1,7 +1,7 @@
 fx_version 'bodacious'
 game 'gta5'
 lua54 'yes'
-description 'Kurotodev - Reference Menu'
+description 'Reference Menu'
 version '1.0.0'
 author 'kurotodev'
 discord 'https://discord.gg/AjhhfKbDFH'
