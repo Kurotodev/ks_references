@@ -1,10 +1,10 @@
 fx_version 'bodacious'
 game 'gta5'
 lua54 'yes'
-description 'Reference Menu'
+description 'Kurotodev - Reference Menu'
 version '1.0.0'
 author 'kurotodev'
-discord 'https://discord.gg/AjhhfKbDFH'
+
 ui_page 'html/index.html'
 files {
     'html/index.html',

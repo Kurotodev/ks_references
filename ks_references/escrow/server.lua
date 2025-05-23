@@ -2,11 +2,11 @@ local Framework = nil
 local ESX, QBCore = nil, nil
 
 if GetResourceState('es_extended') == 'started' then
-        Framework = 'esx'
-        ESX = exports['es_extended']:getSharedObject()
+    Framework = 'esx'
+    ESX = exports['es_extended']:getSharedObject()
 elseif GetResourceState('qb-core') == 'started' then
-        Framework = 'qb'
-        QBCore = exports['qb-core']:GetCoreObject()
+    Framework = 'qb'
+    QBCore = exports['qb-core']:GetCoreObject()
 end
 
 local References_FILE = "reference.json"
@@ -82,21 +82,40 @@ function AgregarUsoACodigo(codigo, identifier)
         local baseReward = Config.Reward.Owner 
         local totalReward = baseReward * ReferenceDB[codigo].usos
 
-        local ownerPlayer = ESX.GetPlayerFromIdentifier(ownerIdentifier)
-        local useplayer = ESX.GetPlayerFromIdentifier(identifier)
-        if useplayer then 
-            useplayer.addMoney(Config.Reward.Referred)
-        end
-        if ownerPlayer then
-            ownerPlayer.addMoney(totalReward)
-        else
-            MySQL.query('SELECT accounts FROM users WHERE identifier = ?', { ownerIdentifier }, function(result)
-                if result and result[1] then
-                    local accounts = json.decode(result[1].accounts)
-                    accounts.money = (accounts.money or 0) + totalReward
-                    MySQL.prepare('UPDATE users SET accounts = ? WHERE identifier = ?', { json.encode(accounts), ownerIdentifier })
-                end
-            end)
+        if Framework == 'esx' then
+            local ownerPlayer = ESX.GetPlayerFromIdentifier(ownerIdentifier)
+            local useplayer = ESX.GetPlayerFromIdentifier(identifier)
+            if useplayer then 
+                useplayer.addMoney(Config.Reward.Referred)
+            end
+            if ownerPlayer then
+                ownerPlayer.addMoney(totalReward)
+            else
+                MySQL.query('SELECT accounts FROM users WHERE identifier = ?', { ownerIdentifier }, function(result)
+                    if result and result[1] then
+                        local accounts = json.decode(result[1].accounts)
+                        accounts.money = (accounts.money or 0) + totalReward
+                        MySQL.prepare('UPDATE users SET accounts = ? WHERE identifier = ?', { json.encode(accounts), ownerIdentifier })
+                    end
+                end)
+            end
+        elseif Framework == 'qb' then
+            local ownerPlayer = QBCore.Functions.GetPlayerByCitizenId(ownerIdentifier)
+            local useplayer = QBCore.Functions.GetPlayerByCitizenId(identifier)
+            if useplayer then 
+                useplayer.Functions.AddMoney('cash', Config.Reward.Referred)
+            end
+            if ownerPlayer then
+                ownerPlayer.Functions.AddMoney('cash', totalReward)
+            else
+                MySQL.query('SELECT money FROM players WHERE citizenid = ?', { ownerIdentifier }, function(result)
+                    if result and result[1] then
+                        local money = result[1].cash or 0
+                        money = money + totalReward
+                        MySQL.prepare('UPDATE players SET money = ? WHERE citizenid = ?', { money, ownerIdentifier })
+                    end
+                end)
+            end
         end
 
         return Config.Language.ClaimSuccess
