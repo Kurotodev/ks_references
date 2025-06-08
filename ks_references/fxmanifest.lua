@@ -16,6 +16,7 @@ client_scripts {
     'escrow/client.lua'
 }
 server_scripts {
+    '@oxmysql/lib/MySQL.lua',
     'config.lua',
     'escrow/server.lua'
 }
